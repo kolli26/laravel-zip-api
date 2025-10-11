@@ -16,6 +16,11 @@ class ZipCode extends Model
         'county_id'
     ];
 
+    protected $hidden = [
+        'place_name_id',
+        'county_id',
+    ];
+
     public function placeName()
     {
         return $this->belongsTo(PlaceName::class);
