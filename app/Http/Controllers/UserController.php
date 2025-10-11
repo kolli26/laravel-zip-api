@@ -22,7 +22,7 @@ class UserController extends Controller
         if (!$user || !Hash::check($password, $user->password)) {
             return response()->json([
                 'message' => 'Invalid credentials'
-            ]);
+            ], 401);
         }
 
         $user->tokens()->delete();
