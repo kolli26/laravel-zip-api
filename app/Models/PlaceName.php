@@ -13,6 +13,11 @@ class PlaceName extends Model
         'name'
     ];
 
+    public function county()
+    {
+        return $this->belongsTo(County::class);
+    }
+
     public function zipCodes()
     {
         return $this->hasMany(ZipCode::class);

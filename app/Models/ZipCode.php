@@ -25,9 +25,4 @@ class ZipCode extends Model
     {
         return $this->belongsTo(PlaceName::class);
     }
-
-    public function county()
-    {
-        return $this->belongsTo(County::class);
-    }
 }

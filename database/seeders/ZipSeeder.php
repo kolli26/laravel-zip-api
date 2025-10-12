@@ -46,9 +46,7 @@ class ZipSeeder extends Seeder
 
     private function import(array $data, Model $model): void
     {
-        if ($model instanceof ZipCode && $data[3] === "") {
-            $data[3] = null;
-        }
+        $data = array_map(fn ($value) => $value === "" ? null : $value, $data);
         $columns = Schema::getColumnListing($model->getTable());
         $model::create(array_combine($columns, $data));
     }

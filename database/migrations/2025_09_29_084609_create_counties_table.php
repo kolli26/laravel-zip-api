@@ -19,13 +19,13 @@ return new class extends Migration
         Schema::create('place_names', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('county_id')->nullable()->constrained('counties')->onDelete('cascade');
         });
 
         Schema::create('zip_codes', function (Blueprint $table) {
             $table->id();
             $table->integer('code');
             $table->foreignId('place_name_id')->constrained('place_names')->onDelete('cascade');
-            $table->foreignId('county_id')->nullable()->constrained('counties')->onDelete('cascade');
         });
     }
 

@@ -13,8 +13,8 @@ class County extends Model
         'name'
     ];
 
-    public function zipCodes()
+    public function placeNames()
     {
-        return $this->hasMany(ZipCode::class);
+        return $this->hasMany(PlaceName::class);
     }
 }
