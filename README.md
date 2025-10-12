@@ -2,9 +2,9 @@
 
 | Method | Endpoint | Auth? | Description |
 | ------ | -------- | ----- | ----------- |
-| POST | `/user/login` | N | Login and get a token |
-| GET | `/zip-code` | N | Get the list of zip codes |
-| GET | `/zip-code/{id}` | N | Get a single zip code |
-| POST | `/zip-code/{id}` | Y | Update a zip code |
-| POST | `/zip-code/create` | Y | Create a new zip code |
-| POST | `/zip-code/{id}/delete` | Y | Delete a zip code |
+| POST | `/users/login` | ❌ | Login and get a token |
+| GET | `/zip-codes` | ❌ | Get the list of zip codes |
+| GET | `/zip-codes/{id}` | ❌ | Get a single zip code |
+| PUT | `/zip-codes/{id}` | ✅ | Update a zip code |
+| POST | `/zip-codes` | ✅ | Create a new zip code |
+| DELETE | `/zip-codes/{id}` | ✅ | Delete a zip code |
