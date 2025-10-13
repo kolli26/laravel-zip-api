@@ -8,3 +8,10 @@
 | PUT | `/zip-codes/{id}` | ✅ | Update a zip code |
 | POST | `/zip-codes` | ✅ | Create a new zip code |
 | DELETE | `/zip-codes/{id}` | ✅ | Delete a zip code |
+| GET | `/counties` | ❌ | Get the list of counties |
+| GET | `/counties/{id}` | ❌ | Get a single county |
+| GET | `/counties/{id}/place-names` | ❌ | Get place names for a county |
+| GET | `/counties/{county}/place-names/{placeName}` | ❌ | Get a single place name for a county |
+| POST | `/counties` | ✅ | Create a new county |
+| PUT | `/counties/{id}` | ✅ | Update a county |
+| DELETE | `/counties/{id}` | ✅ | Delete a county |
