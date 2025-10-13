@@ -12,14 +12,57 @@ class ZipController extends Controller
     public function index() {
         return response()->json([
             'data' => [
-                'zip_codes' => ZipCode::with('county', 'placeName')->get(),
+                'zip_codes' => ZipCode::with('placeName', 'placeName.county')->get(),
+            ]
+        ]);
+    }
+
+    public function show($id) {
+        $zipCode = ZipCode::with('placeName', 'placeName.county')->find($id);
+        if (!$zipCode) {
+            return response()->json([
+                'message' => 'Zip code not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => [
+                'zip_code' => $zipCode,
+            ]
+        ]);
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'zip_code' => 'required|integer|max_digits:4',
+            'place_name' => 'required|string|max:100',
+            'county_id' => 'required|integer|exists:counties,id',
+        ]);
+
+        $code = $request->input('zip_code');
+        $placeName = $request->input('place_name');
+        $county = $request->input('county_id');
+
+        $zipCode = ZipCode::with('placeName', 'placeName.county')->find($id);
+
+        $zipCode->code = $code;
+        $zipCode->placeName->name = $placeName;
+        $zipCode->placeName->county_id = $county;
+
+        $zipCode->placeName->save();
+        $zipCode->save();
+
+        $zipCode->load('placeName', 'placeName.county');
+        return response()->json([
+            'data' => [
+                'zip_code' => $zipCode,
             ]
         ]);
     }
 
     public function store(Request $request) {
         $request->validate([
-            'zip_code' => 'required|int|max_digits:4',
+            'zip_code' => 'required|integer|max_digits:4|unique:zip_codes,code',
             'place_name' => 'required|string|max:100',
             'county' => 'required|string|max:100',
         ]);
@@ -32,15 +75,15 @@ class ZipController extends Controller
             'code' => $request->zip_code,
             'place_name_id' => PlaceName::firstOrCreate([
                 'name' => $placeName,
-            ])->id,
-            'county_id' => County::firstOrCreate([
-                'name' => $county,
+                'county_id' => County::firstOrCreate([
+                    'name' => $county,
+                ])->id,
             ])->id,
         ]);
 
         return response()->json([
             'data' => [
-                'zip_code' => $zipCode->load('county', 'placeName'),
+                'zip_code' => $zipCode->load('placeName', 'placeName.county'),
             ]
         ], 201);
     }

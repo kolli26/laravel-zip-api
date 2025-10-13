@@ -10,7 +10,12 @@ class PlaceName extends Model
 
     protected $fillable = [
         'id',
-        'name'
+        'name',
+        'county_id',
+    ];
+
+    protected $hidden = [
+        'county_id',
     ];
 
     public function county()

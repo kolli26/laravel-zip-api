@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ZipCode extends Model
 {
     public $timestamps = false;
-    public $incrementing = false;
 
     protected $fillable = [
         'id',
@@ -18,7 +17,6 @@ class ZipCode extends Model
 
     protected $hidden = [
         'place_name_id',
-        'county_id',
     ];
 
     public function placeName()
