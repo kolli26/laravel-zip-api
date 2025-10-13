@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PlaceName;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CountyController extends Controller
 {
@@ -25,6 +27,30 @@ class CountyController extends Controller
         return response()->json([
             'data' => [
                 'county' => $county,
+            ]
+        ]);
+    }
+
+    public function placeInitials($id) {
+        $county = \App\Models\County::with('placeNames')->find($id);
+        if (!$county) {
+            return response()->json([
+                'message' => 'County not found',
+            ], 404);
+        }
+
+        // $placeNameInitials = $county->placeNames->map(function($placeName) {
+        //     $valami = strtoupper(substr($placeName->name, 0, 1));
+        //     return $valami;
+        // })->unique()->sort()->values();
+        $placeNameInitials = PlaceName::where('county_id', $id)
+            ->selectRaw('LEFT(name, 1) as "abc"')
+            ->distinct()
+            ->pluck('abc');
+
+        return response()->json([
+            'data' => [
+                'place_initials' => $placeNameInitials,
             ]
         ]);
     }

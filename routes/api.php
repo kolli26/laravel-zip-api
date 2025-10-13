@@ -24,6 +24,8 @@ Route::get('/counties', [\App\Http\Controllers\CountyController::class, 'index']
 
 Route::get('/counties/{id}', [\App\Http\Controllers\CountyController::class, 'show']);
 
+Route::get('/counties/{id}/abc', [\App\Http\Controllers\CountyController::class, 'placeInitials']);
+
 Route::get('/counties/{id}/place-names', [\App\Http\Controllers\CountyController::class, 'placeNames']);
 
 Route::get('/counties/{county}/place-names/{placeName}', [\App\Http\Controllers\CountyController::class, 'placeName']);
