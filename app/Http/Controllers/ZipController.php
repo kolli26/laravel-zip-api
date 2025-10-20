@@ -118,6 +118,12 @@ class ZipController extends Controller
     *       "message": "Zip code not found"
     *     }
      */
+        if (!ZipCode::find($id)) {
+            return response()->json([
+                'message' => 'Zip code not found',
+            ], 404);
+        }
+
         $request->validate([
             'zip_code' => 'required|integer|max_digits:4',
             'place_name' => 'required|string|max:100',
@@ -231,6 +237,6 @@ class ZipController extends Controller
 
         return response()->json([
             'message' => 'Zip code deleted',
-        ]);
+        ], 204);
     }
 }

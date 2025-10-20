@@ -6,6 +6,8 @@ use App\Models\PlaceName;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function Pest\Laravel\get;
+
 class CountyController extends Controller
 {
     /**
@@ -101,14 +103,12 @@ class CountyController extends Controller
             ], 404);
         }
 
-        // $placeNameInitials = $county->placeNames->map(function($placeName) {
-        //     $valami = strtoupper(substr($placeName->name, 0, 1));
-        //     return $valami;
-        // })->unique()->sort()->values();
-        $placeNameInitials = PlaceName::where('county_id', $id)
-            ->selectRaw('LEFT(name, 1) as "abc"')
-            ->distinct()
-            ->pluck('abc');
+        $placeNameInitials = DB::table('place_names')
+            ->select(DB::raw('SUBSTR(name, 1, 1) AS initial'))
+            ->where('county_id', $id)
+            ->get()
+            ->unique()
+            ->pluck('initial');
 
         return response()->json([
             'data' => [
@@ -284,7 +284,7 @@ class CountyController extends Controller
      * @apiError (404) NotFound County not found.
     *
     * @apiSuccessExample {json} Success-Response:
-    *     HTTP/1.1 201 Created
+    *     HTTP/1.1 204 No Content
     *     {
     *       "message": "County deleted successfully"
     *     }
@@ -304,6 +304,6 @@ class CountyController extends Controller
 
         return response()->json([
             'message' => 'County deleted successfully',
-        ], 201);
+        ], 204);
     }
 }
