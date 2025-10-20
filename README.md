@@ -1,5 +1,7 @@
 # Laravel ZIP API - Kollár András 13.P
 
+Apidoc is available at: `/index.html`
+
 | Method | Endpoint | Auth? | Description |
 | ------ | -------- | ----- | ----------- |
 | POST | `/users/login` | ❌ | Login and get a token |
@@ -10,6 +12,7 @@
 | DELETE | `/zip-codes/{id}` | ✅ | Delete a zip code |
 | GET | `/counties` | ❌ | Get the list of counties |
 | GET | `/counties/{id}` | ❌ | Get a single county |
+| GET | `/counties/{id}/abc` | ❌ | Get place name initials for a county |
 | GET | `/counties/{id}/place-names` | ❌ | Get place names for a county |
 | GET | `/counties/{county}/place-names/{placeName}` | ❌ | Get a single place name for a county |
 | POST | `/counties` | ✅ | Create a new county |
